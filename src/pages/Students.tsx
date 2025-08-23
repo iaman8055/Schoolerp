@@ -32,6 +32,18 @@ const Students = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [newStudent, setNewStudent] = useState({
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  class: "",
+  section: "",
+  rollNumber: "",
+  address: "",
+  guardianName: "",
+  guardianPhone: "",
+});
   const { toast } = useToast();
 
   const filteredStudents = students.filter(student => {
@@ -46,13 +58,43 @@ const Students = () => {
     return matchesSearch && matchesClass;
   });
 
-  const handleAddStudent = () => {
-    toast({
-      title: "Student Added",
-      description: "New student has been successfully added to the system.",
-    });
-    setIsAddDialogOpen(false);
+const handleAddStudent = () => {
+  console.log(students)
+  const studentToAdd: Student = {
+    ...newStudent,
+    id: Date.now().toString(), // unique id
+    admissionDate: new Date().toISOString().split("T")[0],
+    dateOfBirth: "",
+    gender: "",
+    guardianEmail: "",
+    feeStatus: "paid",
+    attendance: 0
   };
+
+  setStudents([...students, studentToAdd]); // ✅ spread operator
+
+  setNewStudent({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    class: "",
+    section: "",
+    rollNumber: "",
+    guardianName: "",
+    guardianPhone: "",
+  });
+
+  toast({
+    title: "Student Added",
+    description: "New student has been successfully added to the system.",
+  });
+
+  setIsAddDialogOpen(false);
+};
+
+
 
   const handleEditStudent = (studentId: string) => {
     toast({
@@ -94,7 +136,7 @@ const Students = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="p-6 space-y-6 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
@@ -120,27 +162,48 @@ const Students = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" placeholder="Enter first name" />
+                  <Input 
+                    id="firstName" 
+                    placeholder="Enter first name" 
+                    value={newStudent.firstName}
+                    onChange={(e) => setNewStudent({ ...newStudent, firstName: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" placeholder="Enter last name" />
+                  <Input 
+                    id="lastName" 
+                    placeholder="Enter last name"
+                    value={newStudent.lastName}
+                    onChange={(e) => setNewStudent({ ...newStudent, lastName: e.target.value })}
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Enter email address" />
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="Enter email address" 
+                    value={newStudent.email}
+                    onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" placeholder="Enter phone number" />
+                  <Input 
+                    id="phone" 
+                    placeholder="Enter phone number" 
+                    value={newStudent.phone}
+                    onChange={(e) => setNewStudent({ ...newStudent, phone: e.target.value })}
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="class">Class</Label>
-                  <Select>
+                  <Select onValueChange={(value) => setNewStudent({ ...newStudent, class: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select class" />
                     </SelectTrigger>
@@ -154,7 +217,7 @@ const Students = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="section">Section</Label>
-                  <Select>
+                  <Select onValueChange={(value) => setNewStudent({ ...newStudent, section: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select section" />
                     </SelectTrigger>
@@ -167,21 +230,41 @@ const Students = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="rollNumber">Roll Number</Label>
-                  <Input id="rollNumber" placeholder="Enter roll number" />
+                  <Input 
+                    id="rollNumber" 
+                    placeholder="Enter roll number" 
+                    value={newStudent.rollNumber}
+                    onChange={(e) => setNewStudent({ ...newStudent, rollNumber: e.target.value })}
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
-                <Textarea id="address" placeholder="Enter complete address" />
+                <Textarea 
+                  id="address" 
+                  placeholder="Enter complete address"
+                  value={newStudent.address}
+                  onChange={(e) => setNewStudent({ ...newStudent, address: e.target.value })}
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="guardianName">Guardian Name</Label>
-                  <Input id="guardianName" placeholder="Enter guardian name" />
+                  <Input 
+                    id="guardianName" 
+                    placeholder="Enter guardian name" 
+                    value={newStudent.guardianName}
+                    onChange={(e) => setNewStudent({ ...newStudent, guardianName: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="guardianPhone">Guardian Phone</Label>
-                  <Input id="guardianPhone" placeholder="Enter guardian phone" />
+                  <Input 
+                    id="guardianPhone" 
+                    placeholder="Enter guardian phone" 
+                    value={newStudent.guardianPhone}
+                    onChange={(e) => setNewStudent({ ...newStudent, guardianPhone: e.target.value })}
+                  />
                 </div>
               </div>
             </div>

@@ -14,7 +14,14 @@ import {
   Settings,
   GraduationCap,
   ChevronLeft,
-  Menu
+  Menu,
+  BookOpenTextIcon,
+  BookCheck,
+  Box,
+  UserRoundCheck,
+  Smartphone,
+  Bell,
+  Monitor
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -25,13 +32,20 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Student Management', href: '/students', icon: Users },
   { name: 'Staff Management', href: '/staff', icon: UserCheck },
+  { name: 'Classes', href: '/classes', icon:BookOpenTextIcon  },
   { name: 'Attendance', href: '/attendance', icon: Calendar },
   { name: 'Academic', href: '/academic', icon: BookOpen },
   { name: 'Fee Management', href: '/fees', icon: CreditCard },
+  { name: 'Exams', href: '/exams', icon: BookCheck },
+  { name: 'Notices', href: '/notices', icon: Bell },
   { name: 'Communication', href: '/communication', icon: MessageSquare },
   { name: 'Library', href: '/library', icon: Library },
+  { name: 'HR & Payroll', href: '/hr-payroll', icon: UserRoundCheck },
   { name: 'Transport', href: '/transport', icon: Bus },
+  { name: 'Inventory', href: '/inventory', icon:Box  },
+  { name: 'Parent Portal', href: '/parent-portal', icon:Smartphone  },
   { name: 'Hostel', href: '/hostel', icon: Building },
+  { name: 'E-Learning', href: '/elearning', icon: Monitor },
   { name: 'Reports', href: '/reports', icon: BarChart3 },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
