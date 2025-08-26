@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GraduationCap } from 'lucide-react';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-
+import logo from "../../public/1740152503206.png"
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -68,9 +68,9 @@ export default function Auth() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <GraduationCap className="h-12 w-12 text-primary" />
+            <img src={logo} className='w-16'/>
           </div>
-          <CardTitle className="text-2xl font-bold">SchoolERP</CardTitle>
+          <CardTitle className="text-2xl font-bold">CrudStudio</CardTitle>
           <CardDescription>
             Access your school management system
           </CardDescription>
