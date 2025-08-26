@@ -27,7 +27,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
-
+import logo from "../../../public/colored-logo.png"
 const navigationItems = [
   { name: 'Dashboard', href: '/', icon: Home, roles: ['admin', 'teacher', 'student', 'parent', 'staff'] as UserRole[] },
   { name: 'Student Management', href: '/students', icon: Users, roles: ['admin', 'teacher'] as UserRole[] },
