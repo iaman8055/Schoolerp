@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-
+import logo from "../../../public/colored-logo.png"
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Student Management', href: '/students', icon: Users },
@@ -67,8 +67,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       <div className="flex items-center justify-between p-4 border-b border-primary-light/20">
         {!collapsed && (
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-8 w-8 text-primary-foreground" />
-            <h1 className="text-xl font-bold text-primary-foreground">SchoolERP</h1>
+            <img src={logo} className="w-16"/>
+            <h1 className="text-xl font-bold text-primary-foreground">CrudStudio</h1>
           </div>
         )}
         <Button
