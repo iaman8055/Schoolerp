@@ -16,11 +16,12 @@ export default function Academic() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const subjects = [
-    { id: '1', name: 'Mathematics', class: '10th Grade', teacher: 'Dr. Jane Wilson', credits: 4 },
-    { id: '2', name: 'Physics', class: '11th Grade', teacher: 'Prof. David Anderson', credits: 4 },
-    { id: '3', name: 'English Literature', class: '9th Grade', teacher: 'Ms. Lisa Martinez', credits: 3 },
-  ];
+  const [subjects, setSubjects] = useState([
+    { id: "1", name: "Mathematics", class: "10th Grade", teacher: "Dr. Jane Wilson", credits: 4 },
+    { id: "2", name: "Physics", class: "11th Grade", teacher: "Prof. David Anderson", credits: 4 },
+    { id: "3", name: "English Literature", class: "9th Grade", teacher: "Ms. Lisa Martinez", credits: 3 },
+  ]);
+
 
   const exams = [
     { id: '1', name: 'Mid-term Exam', subject: 'Mathematics', date: '2024-03-15', status: 'Upcoming' },
@@ -34,11 +35,40 @@ export default function Academic() {
     { id: '3', title: 'Essay Writing', subject: 'English', dueDate: '2024-03-20', status: 'Draft' },
   ];
 
+
+
+    const [newSubject, setNewSubject] = useState({
+    name: "",
+    class: "",
+    teacher: "",
+    credits: "",
+    description: "",
+  });
   const handleAddSubject = () => {
+    if (!newSubject.name || !newSubject.class || !newSubject.teacher || !newSubject.credits) {
+      toast({
+        title: "Missing Fields",
+        description: "Please fill all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const subject = {
+      id: Date.now().toString(),
+      ...newSubject,
+      credits: Number(newSubject.credits),
+    };
+
+    setSubjects((prev) => [...prev, subject]);
+
     toast({
       title: "Subject Added",
-      description: "New subject has been successfully added to the curriculum.",
+      description: `${newSubject.name} has been successfully added.`,
     });
+
+    // reset form + close dialog
+    setNewSubject({ name: "", class: "", teacher: "", credits: "", description: "" });
     setIsAddDialogOpen(false);
   };
 
@@ -49,7 +79,7 @@ export default function Academic() {
           <h1 className="text-3xl font-bold text-foreground">Academic Management</h1>
           <p className="text-muted-foreground">Manage curriculum, exams, and academic activities</p>
         </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="w-4 h-4 mr-2" />
@@ -63,42 +93,64 @@ export default function Academic() {
             <div className="grid gap-4 py-4">
               <div>
                 <Label htmlFor="subjectName">Subject Name</Label>
-                <Input id="subjectName" placeholder="Enter subject name" />
+                <Input
+                  id="subjectName"
+                  value={newSubject.name}
+                  onChange={(e) => setNewSubject({ ...newSubject, name: e.target.value })}
+                  placeholder="Enter subject name"
+                />
               </div>
               <div>
                 <Label htmlFor="class">Class</Label>
-                <Select>
+                <Select
+                  onValueChange={(val) => setNewSubject({ ...newSubject, class: val })}
+                  value={newSubject.class}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select class" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9th">9th Grade</SelectItem>
-                    <SelectItem value="10th">10th Grade</SelectItem>
-                    <SelectItem value="11th">11th Grade</SelectItem>
-                    <SelectItem value="12th">12th Grade</SelectItem>
+                    <SelectItem value="9th Grade">9th Grade</SelectItem>
+                    <SelectItem value="10th Grade">10th Grade</SelectItem>
+                    <SelectItem value="11th Grade">11th Grade</SelectItem>
+                    <SelectItem value="12th Grade">12th Grade</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label htmlFor="teacher">Assigned Teacher</Label>
-                <Select>
+                <Select
+                  onValueChange={(val) => setNewSubject({ ...newSubject, teacher: val })}
+                  value={newSubject.teacher}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select teacher" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="jane">Dr. Jane Wilson</SelectItem>
-                    <SelectItem value="david">Prof. David Anderson</SelectItem>
-                    <SelectItem value="lisa">Ms. Lisa Martinez</SelectItem>
+                    <SelectItem value="Dr. Jane Wilson">Dr. Jane Wilson</SelectItem>
+                    <SelectItem value="Prof. David Anderson">Prof. David Anderson</SelectItem>
+                    <SelectItem value="Ms. Lisa Martinez">Ms. Lisa Martinez</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label htmlFor="credits">Credits</Label>
-                <Input id="credits" type="number" placeholder="Enter credits" />
+                <Input
+                  id="credits"
+                  type="number"
+                  value={newSubject.credits}
+                  onChange={(e) => setNewSubject({ ...newSubject, credits: e.target.value })}
+                  placeholder="Enter credits"
+                />
               </div>
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter subject description" />
+                <Textarea
+                  id="description"
+                  value={newSubject.description}
+                  onChange={(e) => setNewSubject({ ...newSubject, description: e.target.value })}
+                  placeholder="Enter subject description"
+                />
               </div>
             </div>
             <div className="flex justify-end gap-2">

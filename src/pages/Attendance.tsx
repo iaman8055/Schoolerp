@@ -16,11 +16,12 @@ export default function Attendance() {
 
   const classes = [...new Set(mockStudents.map(s => s.class))];
   
-  const attendanceData = mockStudents.map(student => ({
-    ...student,
-    status: Math.random() > 0.1 ? 'present' : Math.random() > 0.5 ? 'absent' : 'late'
-  }));
-
+   const [attendanceData, setAttendanceData] = useState(
+    mockStudents.map(student => ({
+      ...student,
+      status: "present", 
+    }))
+  );
   const filteredAttendance = attendanceData.filter(student => 
     selectedClass === "all" || student.class === selectedClass
   );
@@ -34,10 +35,15 @@ export default function Attendance() {
 
   const attendanceRate = ((stats.present + stats.late) / stats.total * 100).toFixed(1);
 
-  const handleMarkAttendance = (studentId: string, status: string) => {
+   const handleMarkAttendance = (studentId: string, status: string) => {
+    setAttendanceData(prev =>
+      prev.map(student =>
+        student.id === studentId ? { ...student, status } : student
+      )
+    );
     toast({
       title: "Attendance Updated",
-      description: `Student attendance marked as ${status}`,
+      description: `Student ${studentId} marked as ${status}`,
     });
   };
 
